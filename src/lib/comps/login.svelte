@@ -1,5 +1,4 @@
 <script>
-    import { Tooltip } from "flowbite-svelte";
     import {
         useForm,
         Hint,
@@ -59,8 +58,8 @@
                 >Введите, пожалуйста, пароль</Hint
             >
         </div>
-        <div class="flex items-start">
-            <div class="flex items-start">
+        <div class="flex justify-end">
+            <!-- <div class="flex items-start">
                 <div class="flex items-center h-5">
                     <input
                         id="remember"
@@ -75,32 +74,28 @@
                     class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >Remember me</label
                 >
+            </div> -->
+
+            <div class="tooltip tooltip-info" data-tip="Обратитесь в деканат">
+                <a
+                    id="lostpwd"
+                    href="#"
+                    class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
+                    >Забыли пароль?</a
+                >
             </div>
-            <a
-                id="lostpwd"
-                href="#"
-                class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-                >Забыли пароль?</a
-            >
-            <Tooltip triggeredBy="#lostpwd" style="light"
-                >Обратитесь в деканат</Tooltip
-            >
         </div>
-
-        {#if $form.valid}
-            <button
-                type="submit"
-                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >Войти</button
-            >
-        {:else}
-            <button
-                type="button"
-                class="w-full text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                disabled>Войти</button
-            >
-        {/if}
-
+        <div class="flex justify-between flex-row-reverse">
+            {#if $form.valid}
+                <button class="w-2/5 btn-sm btn-info rounded-xl">Войти</button>
+            {:else}
+                <button
+                    class="w-2/5 btn-sm btn-info btn-disabled cursor-not-allowed rounded-xl"
+                    disabled>Войти</button
+                >
+            {/if}
+            <button class="w-2/5 btn-sm btn-info rounded-xl">Отмена</button>
+        </div>
         <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
             Not registered? <a
                 href="#"
@@ -108,6 +103,7 @@
                 >Create account</a
             >
         </div> -->
+        <!-- </div> -->
     </form>
 </div>
 
