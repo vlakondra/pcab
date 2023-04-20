@@ -50,13 +50,19 @@
         <ul
           class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
-          <li><a on:click={() => select_comp("")}>Домой?</a></li>
+          <li><a href="#" on:click={() => select_comp("")}>Домой?</a></li>
           <li>
             <a href="#" on:click={() => select_comp("login")}>Вход</a>
           </li>
-          <li><a on:click={() => select_comp("uspev")}>Успеваемость</a></li>
-          <li><a on:click={() => select_comp("pos")}>Посещаемость</a></li>
-          <li><a on:click={() => select_comp("mater")}>Материалы</a></li>
+          <li>
+            <a href="#" on:click={() => select_comp("uspev")}>Успеваемость</a>
+          </li>
+          <li>
+            <a href="#" on:click={() => select_comp("pos")}>Посещаемость</a>
+          </li>
+          <li>
+            <a href="#" on:click={() => select_comp("mater")}>Материалы</a>
+          </li>
         </ul>
       </div>
       <a href="" class="">
