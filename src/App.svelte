@@ -2,45 +2,29 @@
   //https://nerdcave.com/tailwind-cheat-sheet
   // import svelteLogo from "./assets/svelte.svg";
   // import viteLogo from "/vite.svg";
-  // import {
-  //   Navbar,
-  //   NavBrand,
-  //   NavLi,
-  //   NavUl,
-  //   NavHamburger,
-  // } from "flowbite-svelte";
-
-  // import {
-  //   Footer,
-  //   FooterCopyright,
-  //   FooterLinkGroup,
-  //   FooterLink,
-  // } from "flowbite-svelte";
 
   let selected_comp;
 
   import Login from "./lib/comps/login.svelte";
   import Uspev from "./lib/comps/uspev.svelte";
-  // import NavBar from "./lib/comps/navbar.svelte";
+  import Logout from "./lib/comps/logout.svelte";
+
+  import { loginResult, accessToken } from "./lib/store.js";
 
   const select_comp = (comp) => {
+    console.log(comp);
     switch (comp) {
       case "login":
         selected_comp = Login;
         break;
       case "uspev":
-        selected_comp = Uspev;
+        if ($accessToken) selected_comp = Uspev;
+        else selected_comp = Login;
         break;
       default:
+        selected_comp = undefined;
         break;
     }
-
-    //  if (comp == "login") {
-    //   selected_comp = Login;
-    //   console.log(comp);
-    // } else if (comp == "uspev") {
-    //   selected_comp = Uspev;
-    // }
   };
 </script>
 
@@ -66,46 +50,45 @@
         <ul
           class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
-          <li><a href="/">home</a></li>
+          <li><a on:click={() => select_comp("")}>Домой?</a></li>
           <li>
-            <a href="" class="justify-between">
-              Parent
-              <svg
-                class="fill-current"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                ><path
-                  d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                /></svg
-              >
-            </a>
-            <ul class="p-2 bg-white">
-              <li><a href="/register">Регистрация</a></li>
-              <li><a href="/login">Вход</a></li>
-            </ul>
+            <a href="#" on:click={() => select_comp("login")}>Вход</a>
           </li>
-          <li>
-            <a href="/login">Вход</a>
-            <!-- наивная защита маршрута -->
-            <!-- {#if data.session?.user?.name}
-							<a href="/quiz/0">Quiz</a>
-						{:else}
-							<a href="/login">Вход</a>
-						{/if} -->
-          </li>
+          <li><a on:click={() => select_comp("uspev")}>Успеваемость</a></li>
+          <li><a on:click={() => select_comp("pos")}>Посещаемость</a></li>
+          <li><a on:click={() => select_comp("mater")}>Материалы</a></li>
         </ul>
       </div>
-      <a href="" class="btn btn-ghost normal-case text-xl"> daisyUI </a>
+      <a href="" class="">
+        <!-- иконка лич. каб. -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+          />
+        </svg>
+      </a>
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><a href="/">Home</a></li>
-        <li>
+        <li><a on:click={() => select_comp("")}>Домой</a></li>
+        <li><a on:click={() => select_comp("login")}>Вход</a></li>
+        <li><a on:click={() => select_comp("uspev")}>Успеваемость</a></li>
+        <li><a on:click={() => select_comp("pos")}>Посещаемость</a></li>
+        <li><a on:click={() => select_comp("mater")}>Материалы</a></li>
+
+        <!-- <li>
           <a href="#">
             Parent
-            <svg
+            <!-- <svg
               class="fill-current"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -114,78 +97,25 @@
               ><path
                 d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
               /></svg
-            >
+            > 
           </a>
           <ul class="p-2 bg-slate-50 z-50">
             <li><a href="/register">Регистрация</a></li>
             <li><a href="#" on:click={() => select_comp("login")}>Вход</a></li>
           </ul>
-        </li>
-        <!-- <li><a href="/quiz/0">Quiz</a></li> -->
-        <li>
-          <a href="#">Вход</a>
-          <!-- {#if data.session?.user?.name}
-						<a href="/quiz/0">Quiz</a>
-					{:else}
-						<a href="/login">Вход</a>
-					{/if} -->
-        </li>
+        </li> -->
       </ul>
     </div>
-    <div class="navbar-end">
-      END
-      <!-- {#if data.session.user}
-				<form action="/bye">
-					<button>Привет, {data.session.user.name}</button>
-				</form>
-			{:else}
-				<a class="btn">Get started</a>
-			{/if} -->
+    <div class="navbar-end mr-6">
+      <Logout toggle_login={select_comp} />
     </div>
   </div>
 
-  <!-- <Navbar let:hidden let:toggle>
-    <NavBrand href="/">
-      <img
-        src="https://flowbite.com/docs/images/logo.svg"
-        class="mr-3 h-6 sm:h-9"
-        alt="Flowbite Logo"
-      />
-      <span
-        class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-      >
-        Личный кабинет
-      </span>
-    </NavBrand>
-    <NavHamburger on:click={toggle} />
-    <NavUl {hidden}>
-      <NavLi href="/" active={true}>Home</NavLi>
-      <NavLi on:click={() => select_comp("login")}>{hidden}Вход</NavLi>
-      <NavLi on:click={() => select_comp("uspev")}>Успеваемость</NavLi>
-      <NavLi href="/pricing">Посещаемость</NavLi>
-      <NavLi href="/contact">Материалы</NavLi>
-    </NavUl>
-  </Navbar> -->
-
-  <!-- <NavBar /> -->
-
   <div>
-    <svelte:component this={selected_comp} />
+    {#if selected_comp}
+      <svelte:component this={selected_comp} toggle_login={select_comp} />
+    {/if}
   </div>
-
-  <!-- <Footer
-    class="sticky top-full bottom-0 left-0 z-20  p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600 "
-  >
-    <FooterCopyright href="/" by="Flowbite™" year={2022} />
-    <FooterLinkGroup
-      ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-    >
-      <FooterLink href="/">About</FooterLink>
-      <FooterLink href="/">Privacy Policy</FooterLink>
-      <FooterLink href="/">Licensing</FooterLink>
-      <FooterLink href="/">Contact</FooterLink>
-    </FooterLinkGroup>
-  </Footer> -->
 </main>
 
 <style>

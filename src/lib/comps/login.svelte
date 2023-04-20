@@ -9,16 +9,54 @@
         required,
     } from "svelte-use-form";
 
+    import Auth, { loginResult } from "../store.js";
+
     const form = useForm();
+    export let toggle_login;
+
+    $: if ($loginResult == true) {
+        //срабатывает после успешного входа
+        $loginResult = null;
+        toggle_login("");
+    }
+
+    async function submitHandler() {
+        try {
+            const data = new URLSearchParams();
+            const clientId = "studentlk";
+            const clientSecret = "studentlk";
+            const scopes = "basic studentlk";
+            data.append("grant_type", "password");
+            data.append("client_id", clientId);
+            data.append("client_secret", clientSecret);
+            data.append("scope", scopes);
+            data.append("username", $form.email.value);
+            data.append("password", $form.password.value);
+
+            await Auth(data);
+            loginResult.set(null);
+            console.log("data", data.get("username"));
+        } catch (error) {
+            console.log("EE", error.message);
+        }
+    }
 </script>
 
 <div
     class="w-full max-w-xs p-4 mx-auto my-5 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
 >
-    <form class="space-y-6" action="#" use:form>
+    <form on:submit|preventDefault={submitHandler} class="space-y-6" use:form>
         <h5 class="text-xl font-medium text-gray-900 dark:text-white">
             Вход в личный кабинет
         </h5>
+        {#if $loginResult == false}
+            <div
+                class="font-medium text-red-600 text-sm border-b border-x-blue-800"
+            >
+                Вход в личный кабинет не выполнен
+            </div>
+        {/if}
+
         <div>
             <label
                 for="email"
@@ -29,8 +67,9 @@
                 type="email"
                 name="email"
                 id="email"
+                value="someone@some.host"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="name@mail.ru"
+                placeholder="someone@some.host"
                 use:validators={[email, required]}
             />
             <HintGroup for="email">
@@ -87,14 +126,23 @@
         </div>
         <div class="flex justify-between flex-row-reverse">
             {#if $form.valid}
-                <button class="w-2/5 btn-sm btn-info rounded-xl">Войти</button>
+                <button type="submit" class="w-2/5 btn-sm btn-info rounded-xl"
+                    >Войти</button
+                >
             {:else}
                 <button
                     class="w-2/5 btn-sm btn-info btn-disabled cursor-not-allowed rounded-xl"
                     disabled>Войти</button
                 >
             {/if}
-            <button class="w-2/5 btn-sm btn-info rounded-xl">Отмена</button>
+            <button
+                on:click={(e) => {
+                    e.preventDefault();
+                    $loginResult = null;
+                    toggle_login("");
+                }}
+                class="w-2/5 btn-sm btn-info rounded-xl">Отмена</button
+            >
         </div>
         <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
             Not registered? <a
