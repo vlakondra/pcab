@@ -15,7 +15,7 @@
     console.log(comp);
     switch (comp) {
       case "login":
-        selected_comp = Login;
+        if (!$accessToken) selected_comp = Login;
         break;
       case "uspev":
         if ($accessToken) selected_comp = Uspev;
