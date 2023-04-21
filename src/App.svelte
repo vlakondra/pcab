@@ -28,8 +28,8 @@
   };
 </script>
 
-<main class="container sm:mx-auto px-1">
-  <div class="navbar sticky top-0 bg-base-100 z-50">
+<main class="container mx-auto h-screen bg-slate-400">
+  <div class="navbar sticky top-0 bg-base-100 bg-cyan-200 z-50">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -125,8 +125,4 @@
 </main>
 
 <style>
-  .container {
-    background-color: rgb(115, 155, 194);
-    min-height: 100vh;
-  }
 </style>
