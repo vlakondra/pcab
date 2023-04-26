@@ -14,7 +14,7 @@
 <div
     on:click={close_cab}
     on:keypress={null}
-    class="tooltip tooltip-info tooltip-bottom cursor-pointer"
+    class="flex tooltip tooltip-info tooltip-bottom cursor-pointer"
     data-tip="Закрыть кабинет"
 >
     {#if $infoToken}

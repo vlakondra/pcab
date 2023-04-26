@@ -8,6 +8,7 @@
   import Login from "./lib/comps/login.svelte";
   import Uspev from "./lib/comps/uspev.svelte";
   import Logout from "./lib/comps/logout.svelte";
+  import Absence from "./lib/comps/absence.svelte";
 
   import { loginResult, accessToken } from "./lib/store.js";
 
@@ -21,6 +22,10 @@
         if ($accessToken) selected_comp = Uspev;
         else selected_comp = Login;
         break;
+      case "abs":
+        if ($accessToken) selected_comp = Absence;
+        else selected_comp = Login;
+        break;
       default:
         selected_comp = undefined;
         break;
@@ -28,7 +33,7 @@
   };
 </script>
 
-<main class="container mx-auto h-screen bg-slate-400">
+<main class="container mx-auto min-h-screen bg-slate-400">
   <div class="navbar sticky top-0 bg-base-100 bg-cyan-200 z-50">
     <div class="navbar-start">
       <div class="dropdown">
@@ -58,7 +63,7 @@
             <a href="#" on:click={() => select_comp("uspev")}>Успеваемость</a>
           </li>
           <li>
-            <a href="#" on:click={() => select_comp("pos")}>Посещаемость</a>
+            <a href="#" on:click={() => select_comp("abs")}>Посещаемость</a>
           </li>
           <li>
             <a href="#" on:click={() => select_comp("mater")}>Материалы</a>
@@ -88,7 +93,7 @@
         <li><a on:click={() => select_comp("")}>Домой</a></li>
         <li><a on:click={() => select_comp("login")}>Вход</a></li>
         <li><a on:click={() => select_comp("uspev")}>Успеваемость</a></li>
-        <li><a on:click={() => select_comp("pos")}>Посещаемость</a></li>
+        <li><a on:click={() => select_comp("abs")}>Посещаемость</a></li>
         <li><a on:click={() => select_comp("mater")}>Материалы</a></li>
 
         <!-- <li>
@@ -112,7 +117,8 @@
         </li> -->
       </ul>
     </div>
-    <div class="navbar-end mr-6">
+    <div class="flex-col navbar-end mr-6">
+      <!-- flex-col - для устранения эффекта с верт. скроллингом -->
       <Logout toggle_login={select_comp} />
     </div>
   </div>

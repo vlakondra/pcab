@@ -1,7 +1,7 @@
 import { readable, writable } from 'svelte/store'
 import { add } from 'date-fns'
 import Cookies from "js-cookie";
-import jwt_decode from "jwt-decode";
+//??import jwt_decode from "jwt-decode";
 
 
 export const loginResult = writable(null)
@@ -14,8 +14,9 @@ const cookieName = 'api_token'
 
 export default async function (formData) {
     let url = "https://api-1.ursei.su/access_token";
-
+    let token = ''
     async function authenticate() {
+
         let response = await fetch(url, {
             method: "post",
             mode: "cors", // no-cors, *cors, same-origin,
@@ -33,10 +34,12 @@ export default async function (formData) {
             loginResult.set(true)
 
             const resp_js = await response.json();
-            console.log(resp_js)
+            console.log(200, resp_js)
 
             accessToken.set(resp_js.access_token)
-            infoToken.set(jwt_decode(resp_js.access_token).aud)
+            token = resp_js.access_token
+
+            ///???infoToken.set(jwt_decode(resp_js.access_token).aud)
 
             //добавляется 1 час к тек.дате 
             // let now = new Date()
@@ -57,6 +60,8 @@ export default async function (formData) {
                 { path: '/', expires: 30, sameSite: 'Lax' });
 
             //document.cookie = `${cookieName}=${JSON.stringify(resp_js)};expires=${expires_1};samesite=lax;path=/`
+
+            await SelfInfo(token)
         } else {
             loginIsOpen.set(true)
             loginResult.set(false)
@@ -66,4 +71,29 @@ export default async function (formData) {
         }
     }
     authenticate()
+    // await SelfInfo(token)
+}
+
+async function SelfInfo(token) {
+    let url = "https://api-1.ursei.su/studlk/SelfInfo";
+    console.log('??', `Bearer ${token}`)
+
+    let response = await fetch(url, {
+        method: "GET",
+        mode: "cors", // no-cors, *cors, same-origin,
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            //'Authorization': `Bearer ${accessToken}`,
+            'Authorization': `Bearer ${token}`,
+        }
+    });
+    //
+    if (response.status === 200) {
+        const resp_js = await response.json();
+        console.log("SelfInfo", resp_js)
+        infoToken.set(resp_js.FIO)
+    }
 }
