@@ -31,7 +31,10 @@
     <title>Посещаемость</title>
 </svelte:head>
 
-<div class="bg-amber-100 w-auto px-8 py-8">
+<div
+    style="min-height: 400px;"
+    class="bg-amber-100 box-content w-auto px-8 py-8"
+>
     <h1 class="text-center">Посещаемость</h1>
     {#await data}
         <p>Загрузка...</p>
@@ -54,7 +57,7 @@
             <div class="px-2">
                 <table class="table table-compact w-full">
                     <tr>
-                        <th>Предмет (час.)</th>
+                        <th>Предмет </th>
                         <th>План (час.)</th>
                         <th>Пропуски (час.) </th>
                     </tr>
