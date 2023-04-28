@@ -91,7 +91,7 @@
       <ul class="menu menu-horizontal px-1">
         <li><a on:click={() => select_comp("")}>Домой</a></li>
         <li><a on:click={() => select_comp("login")}>Вход</a></li>
-        <li><a on:click={() => select_comp("uspev")}>Успеваемость</a></li>
+        <li><a on:click={() => select_comp("marks")}>Успеваемость</a></li>
         <li><a on:click={() => select_comp("abs")}>Посещаемость</a></li>
         <li><a on:click={() => select_comp("mater")}>Материалы</a></li>
 
