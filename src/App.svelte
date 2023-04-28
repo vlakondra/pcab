@@ -6,20 +6,19 @@
   let selected_comp;
 
   import Login from "./lib/comps/login.svelte";
-  import Uspev from "./lib/comps/uspev.svelte";
+  import Marks from "./lib/comps/marks.svelte";
   import Logout from "./lib/comps/logout.svelte";
   import Absence from "./lib/comps/absence.svelte";
 
   import { loginResult, accessToken } from "./lib/store.js";
 
   const select_comp = (comp) => {
-    console.log(comp);
     switch (comp) {
       case "login":
         if (!$accessToken) selected_comp = Login;
         break;
-      case "uspev":
-        if ($accessToken) selected_comp = Uspev;
+      case "marks":
+        if ($accessToken) selected_comp = Marks;
         else selected_comp = Login;
         break;
       case "abs":
@@ -60,7 +59,7 @@
             <a href="#" on:click={() => select_comp("login")}>Вход</a>
           </li>
           <li>
-            <a href="#" on:click={() => select_comp("uspev")}>Успеваемость</a>
+            <a href="#" on:click={() => select_comp("marks")}>Успеваемость</a>
           </li>
           <li>
             <a href="#" on:click={() => select_comp("abs")}>Посещаемость</a>
