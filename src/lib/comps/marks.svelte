@@ -95,7 +95,7 @@
             <div class="flex-grow px-1">
                 {#each value.filter((obj) => obj.Sem == selected_sem) as item}
                     <div
-                        class=" border-indigo-200 border-b-2 grid grid-rows-[minmax(0,1fr)_auto] grid-cols-[3fr_1.25fr] items-start gap-x-1 gap-y-0 leading-none mb-1 decoration-slate-900 bg-base-100 mark-item"
+                        class=" border-indigo-200 border-b-2 min-w-[300px] grid grid-rows-[minmax(0,1fr)_auto] grid-cols-[3fr_125px] items-start gap-x-0 gap-y-0 leading-none mb-1 decoration-slate-900 bg-base-100 mark-item"
                     >
                         <div class="subj text-gray-500">
                             {item.SubjSN}
@@ -175,7 +175,7 @@
         width: -moz-fit-content;
         width: fit-content;
         border-radius: 4px;
-        padding: 0 5px;
+        padding: 0 1px;
         font-size: 0.75rem;
     }
     .zach {
