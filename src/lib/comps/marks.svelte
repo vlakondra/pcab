@@ -95,9 +95,9 @@
             <div class="flex-grow px-1">
                 {#each value.filter((obj) => obj.Sem == selected_sem) as item}
                     <div
-                        class=" border-indigo-200 border-b-2 grid grid-rows-[minmax(0,1fr)_auto] grid-cols-[3fr_1.5fr] items-start gap-x-1 gap-y-0 leading-none mb-1 decoration-slate-900 bg-base-100 mark-item"
+                        class=" border-indigo-200 border-b-2 grid grid-rows-[minmax(0,1fr)_auto] grid-cols-[3fr_1.25fr] items-start gap-x-1 gap-y-0 leading-none mb-1 decoration-slate-900 bg-base-100 mark-item"
                     >
-                        <div class="subj">
+                        <div class="subj text-gray-500">
                             {item.SubjSN}
                         </div>
                         <div class="fio">
@@ -108,8 +108,6 @@
                             <span class={"mark " + formatMark(item.MarkSN)}>
                                 {item.MarkSN}</span
                             >
-                            <!-- <span>{item.LoadKindSN}:</span>
-                            <span>{item.MarkSN}</span> -->
                         </div>
                         <div class="date-mark">
                             {new Date(item.DateMark).toLocaleDateString()}
@@ -122,15 +120,9 @@
 </div>
 
 <style>
-    /* background-color: #a88c2b;
-    color: white;
-    line-height: 1em;
-    display: inline-block;
-    height: 17px;
-    width: fit-content; */
     .loadkindsn {
         display: inline-block;
-        width: 63px;
+        width: 65px;
     }
 
     .active {
@@ -159,7 +151,7 @@
         grid-column: 1 / 2;
         grid-row: 1 / 2;
         font-weight: 500;
-        color: #7e6363;
+        /* color: #7e6363; */
     }
     .fio {
         grid-column: 1 / 2;
@@ -168,6 +160,7 @@
     .load-mark {
         grid-column: 2 / 3;
         grid-row: 1 / 2;
+        white-space: nowrap;
     }
     .date-mark {
         grid-column: 2 / 3;

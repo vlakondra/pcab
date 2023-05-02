@@ -33,10 +33,7 @@
 </script>
 
 <main class="container mx-auto min-h-screen bg-slate-400">
-  <div
-    style="z-index:999"
-    class="navbar sticky top-0 bg-base-100 bg-cyan-200 z-50"
-  >
+  <div style="z-index:999" class="navbar sticky top-0 bg-cyan-200 z-50">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
