@@ -34,12 +34,9 @@
     <title>Посещаемость</title>
 </svelte:head>
 
-<div
-    style="min-height: 400px;"
-    class="bg-slate-100 box-content w-auto px-3 py-8"
->
+<div class="bg-slate-100 box-content w-auto px-3 py-8 min-h-screen">
     {#await data}
-        <p>Загрузка...</p>
+        <p>Загрузка...?</p>
     {:then value}
         <h1 class="sm:block mb-5 tracking-wider text-lg text-center">
             Посещаемость. {selected_sem} семестр

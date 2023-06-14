@@ -9,6 +9,7 @@
   import Marks from "./lib/comps/marks.svelte";
   import Logout from "./lib/comps/logout.svelte";
   import Absence from "./lib/comps/absence.svelte";
+  import Mater from "./lib/comps/mater.svelte";
 
   import { loginResult, accessToken } from "./lib/store.js";
 
@@ -25,6 +26,11 @@
         if ($accessToken) selected_comp = Absence;
         else selected_comp = Login;
         break;
+      case "mater":
+        if ($accessToken) selected_comp = Mater;
+        else selected_comp = Login;
+        break;
+
       default:
         selected_comp = undefined;
         break;

@@ -53,10 +53,7 @@
     <title>Успеваемость</title>
 </svelte:head>
 
-<div
-    style="min-height: 400px;"
-    class="bg-slate-100 box-content w-auto px-3 py-8"
->
+<div class="bg-slate-100 box-content w-auto px-3 py-8 min-h-screen">
     {#await data}
         <p>Загрузка...</p>
     {:then value}

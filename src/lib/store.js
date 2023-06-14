@@ -11,6 +11,7 @@ export const accessToken = writable(null)
 export const infoToken = writable(null)
 
 const cookieName = 'api_token'
+export const modal_show = writable(false);
 
 export default async function (formData) {
     let url = "https://api-1.ursei.su/access_token";
@@ -76,7 +77,6 @@ export default async function (formData) {
 
 async function SelfInfo(token) {
     let url = "https://api-1.ursei.su/studlk/SelfInfo";
-    console.log('??', `Bearer ${token}`)
 
     let response = await fetch(url, {
         method: "GET",
