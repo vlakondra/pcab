@@ -27,9 +27,6 @@
             (obj) => obj.LoadKindSN == "Зачет" || obj.LoadKindSN == "Экзамен"
         );
         semesters = [...new Set(data.map((obj) => obj.Sem))];
-
-        console.log(semesters);
-        console.log(data); // stud_marks);
     }
 
     onMount(get_marks);
@@ -53,64 +50,70 @@
     <title>Успеваемость</title>
 </svelte:head>
 
-<div class="bg-slate-100 box-content w-auto px-3 py-8 min-h-screen">
+<div class="bg-[#fff1dc;] box-content w-auto px-3 py-8 min-h-screen">
     {#await data}
         <p>Загрузка...</p>
     {:then value}
-        <h1 class="sm:block mb-5 tracking-wider text-lg text-center">
-            Успеваемость. {selected_sem} семестр
-        </h1>
-        <div class="flex flex-col m-auto max-w-3xl sm:flex-row">
-            <div
-                class="flex-grow-0 px-0 w-48 dropdown dropdown-hover sm:dropdown-open"
+        <div>
+            <h1
+                class="sm:block mb-5 m-auto tracking-wider max-w-3xl text-lg text-center h-12 leading-[3rem] bg-[#7a7ade;] text-[#f5fbfb;] font-semibold"
             >
-                <button
-                    tabindex="0"
-                    style=""
-                    class="btn btn-info w-full btn:sm sm:hidden z-0 mb-2 min-h-6 h-4 p-0"
+                Успеваемость. {selected_sem} семестр
+            </h1>
+            <div class="flex flex-col m-auto max-w-3xl sm:flex-row">
+                <div
+                    class="flex-grow-0 px-0 w-48 dropdown dropdown-hover sm:dropdown-open"
                 >
-                    Выберите семестр
-                </button>
-
-                <ul
-                    tabindex="0"
-                    class="w-full z-0 dropdown-content menu p-2 shadow bg-cyan-200"
-                >
-                    {#each semesters as item}
-                        <li
-                            class:active={selected_sem === item}
-                            on:keydown={null}
-                            class="cursor-pointer hover:border border-indigo-600 px-1 my-1 whitespace-nowrap"
-                            on:click={() => (selected_sem = item)}
-                        >
-                            {item} семестр
-                        </li>
-                    {/each}
-                </ul>
-            </div>
-
-            <div class="flex-grow px-1">
-                {#each value.filter((obj) => obj.Sem == selected_sem) as item}
-                    <div
-                        class=" border-indigo-200 border-b-2 min-w-[300px] grid grid-rows-[minmax(0,1fr)_auto] grid-cols-[3fr_125px] items-start gap-x-0 gap-y-0 leading-none mb-1 decoration-slate-900 bg-base-100 mark-item"
+                    <button
+                        tabindex="0"
+                        style=""
+                        class="btn btn-info w-full btn:sm sm:hidden z-0 mb-2 min-h-6 h-8 p-0"
                     >
-                        <div class="subj text-gray-500">
-                            {item.SubjSN}
-                        </div>
-                        <div class="fio">
-                            {item.EmpFIO}
-                        </div>
-                        <div class=" load-mark">
-                            <span class="loadkindsn">{item.LoadKindSN}:</span>
-                            <span class={"mark " + formatMark(item.MarkSN)}>
-                                {item.MarkSN}</span
+                        Выберите семестр
+                    </button>
+
+                    <ul
+                        tabindex="0"
+                        class="w-full z-0 dropdown-content menu text-lg border-[1px] border-solid border-indigo-300 p-2 shadow bg-[#f7ffff;]"
+                    >
+                        {#each semesters as item}
+                            <li
+                                class:active={selected_sem === item}
+                                on:keydown={null}
+                                class="cursor-pointer hover:bg-red-400 hover:text-cyan-200 px-1 my-1 whitespace-nowrap"
+                                on:click={() => (selected_sem = item)}
                             >
+                                {item} семестр
+                            </li>
+                        {/each}
+                    </ul>
+                </div>
+
+                <div class="flex-grow px-1">
+                    {#each value.filter((obj) => obj.Sem == selected_sem) as item}
+                        <div
+                            class=" border-indigo-200 border-b-2 min-w-[300px] grid grid-rows-[minmax(0,1fr)_auto] grid-cols-[3fr_125px] items-start gap-x-0 gap-y-0 leading-none mb-1 decoration-slate-900 bg-base-100 mark-item"
+                        >
+                            <div class="subj text-gray-500">
+                                {item.SubjSN}
+                            </div>
+                            <div class="fio">
+                                {item.EmpFIO}
+                            </div>
+                            <div class=" load-mark">
+                                <span class="loadkindsn"
+                                    >{item.LoadKindSN}:</span
+                                >
+                                <span class={"mark " + formatMark(item.MarkSN)}>
+                                    {item.MarkSN}</span
+                                >
+                            </div>
+                            <div class="date-mark">
+                                {new Date(item.DateMark).toLocaleDateString()}
+                            </div>
                         </div>
-                        <div class="date-mark">
-                            {new Date(item.DateMark).toLocaleDateString()}
-                        </div>
-                    </div>
-                {/each}
+                    {/each}
+                </div>
             </div>
         </div>
     {/await}
@@ -126,20 +129,7 @@
         background-color: rgb(168, 94, 237);
         color: azure;
     }
-    .mark-item {
-        /* display: grid; */
-        /* grid-gap: 2px; */
-        /* row-gap: 1px;
-        column-gap: 5px; */
-        /* grid-template-columns: 75% 25%; */
-        /* grid-template-columns: 3fr 1fr; */
-        /* grid-template-rows: auto auto; */
 
-        /* line-height: 1; */
-        /* margin-bottom: 5px; */
-        /* background-color: #fdfdfd;
-        color: rgb(53, 30, 30); */
-    }
     .mark-item div {
         padding: 2px 5px;
         color: #7e6363;

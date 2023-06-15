@@ -2,6 +2,9 @@
     import { onMount } from "svelte";
     import { accessToken } from "../store";
 
+    import Fa from "svelte-fa";
+    import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
+
     let selected_subj = 0;
     let current_subj = {};
     let link;
@@ -21,10 +24,8 @@
                 Authorization: `Bearer ${$accessToken}`,
             },
         });
-        console.log(res);
         data = await res.json();
         current_subj = data.Subj[0];
-        console.log(data);
     }
 
     //https://stackoverflow.com/questions/32545632/how-can-i-download-a-file-using-window-fetch
@@ -54,55 +55,77 @@
     <title>Учебные материалы</title>
 </svelte:head>
 
-<div class="bg-slate-100 box-content w-auto px-3 py-8 min-h-screen">
+<div class="bg-[#fff1dc;] box-content w-auto px-3 py-8 min-h-screen">
     <div>
         {#await data}
             <p>Загрузка...M</p>
         {:then value}
-            <h1 class="sm:block mb-5 tracking-wider text-lg text-center">
-                Учебные материалы
-                <a class="absolute top-[-999px]" bind:this={link} />
-            </h1>
-            <div class="flex flex-col m-auto max-w-3xl sm:flex-row">
-                <div
-                    class="flex-grow-0 px-0 w-80 dropdown dropdown-hover sm:dropdown-open"
+            <div>
+                <h1
+                    class="sm:block mb-5 m-auto tracking-wider text-lg text-center h-12 leading-[3rem] bg-[#7a7ade;] text-[#f5fbfb;] font-semibold"
                 >
-                    <button
-                        tabindex="0"
-                        style=""
-                        class="btn btn-info w-full btn:sm sm:hidden z-0 mb-2 min-h-6 h-4 p-0"
+                    Учебные материалы
+                    <a class="absolute top-[-999px]" bind:this={link} />
+                </h1>
+                <div class="flex flex-col m-auto sm:flex-row">
+                    <div
+                        class="flex-grow-0 px-0 w-[300px] dropdown dropdown-hover sm:dropdown-open"
                     >
-                        Выберите раздел
-                    </button>
+                        <button
+                            tabindex="0"
+                            style=""
+                            class="btn btn-info w-full btn:sm sm:hidden z-0 mb-2 min-h-6 h-8 p-0"
+                        >
+                            Выберите раздел
+                        </button>
+                        <!-- cursor-pointer text-gray-700 leading-4 pt-1 pb-1 hover:bg-green-700 hover:text-cyan-200 px-1 my-1 -->
+                        <ul
+                            tabindex="0"
+                            class="w-full min-w-[300px] z-0 dropdown-content menu p-2 shadow text-lg border-[1px] border-solid border-indigo-300 shadow bg-[#f7ffff;]"
+                        >
+                            {#each data.Subj as item}
+                                <li
+                                    class:active={selected_subj ===
+                                        item.Subj_ID}
+                                    on:keydown={null}
+                                    class="cursor-pointer text-gray-700 leading-4 pt-1 pb-1 hover:bg-red-400 hover:text-cyan-200 px-1 my-1"
+                                    on:click={() => {
+                                        selected_subj = item.Subj_ID;
+                                        current_subj = item;
+                                    }}
+                                >
+                                    {item.SubjName}
+                                </li>
+                            {/each}
+                        </ul>
+                    </div>
 
-                    <ul
-                        tabindex="0"
-                        class="w-full min-w-[310px] z-0 dropdown-content menu p-2 shadow bg-cyan-200"
+                    <div
+                        class="px-1"
+                        style="flex-grow: 1;flex-basis: min-content;"
                     >
-                        {#each data.Subj as item}
-                            <li
-                                class:active={selected_subj === item.Subj_ID}
-                                on:keydown={null}
-                                class="cursor-pointer text-gray-700 leading-4 pt-1 pb-1 hover:bg-green-700 hover:text-cyan-200 px-1 my-1"
-                                on:click={() => {
-                                    selected_subj = item.Subj_ID;
-                                    current_subj = item;
-                                }}
-                            >
-                                {item.SubjName}
-                            </li>
-                        {/each}
-                    </ul>
-                </div>
-
-                <div class="flex-grow px-1">
-                    <ul>
-                        {#each current_subj.Files as item}
-                            <li on:click={() => download(item)}>
-                                {item.DocRef}
-                            </li>
-                        {/each}
-                    </ul>
+                        <ul>
+                            {#each current_subj.Files as item}
+                                <li
+                                    class="cursor-pointer hover:bg-green-500 hover:text-cyan-50 text-lg bg-[#f6ffff;] leading-4 mb-3 px-1 py-2"
+                                    on:click={() => download(item)}
+                                >
+                                    <div
+                                        style="display:flex; justify-content: space-between; align-items: center;"
+                                    >
+                                        <div>
+                                            {item.DocRef}
+                                        </div>
+                                        <div
+                                            style="font-size: 1.5em; color: #ba5efd;"
+                                        >
+                                            <Fa icon={faFileDownload} />
+                                        </div>
+                                    </div>
+                                </li>
+                            {/each}
+                        </ul>
+                    </div>
                 </div>
             </div>
         {/await}
